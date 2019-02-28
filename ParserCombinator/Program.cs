@@ -47,18 +47,19 @@ namespace ParserCombinator
             ParseResult<char> j = item("");     // yields null
             Console.WriteLine("Return {0}", null);  // yields { 'w', "hatever" }
 
-
             //Sat
             P<char> letter = Parser.Sat(char.IsLetter);
             ParseResult<char> l = letter("foo");
             Console.WriteLine("Sat {0}",l.Result);  // yields { 'f', "oo" }
 
-            letter("123");  // yields null
-            letter("");     // yields null/
+            P<char> digit = Parser.Sat(char.IsDigit);
+            ParseResult<char> d = digit("12345");
+            Console.WriteLine("Sat {0}", d.Result);  // yields { 'f', "oo" }
 
-            //P<char> digit = Parser.Sat(char.IsDigit);
+            P<char> letterOrDigit = Parser.Or(letter, digit);
+            ParseResult<char> lord = letter("123foo");
+            Console.WriteLine("Sat {0}", lord.Result);  // yields { 'f', "oo" }
 
-            //P<char> letterOrDigit = Parser.Or(letter, digit);
             //letterOrDigit("foo");  // yields { 'f', "oo" }
             //letterOrDigit("123");  // yields { '1', "23" }
             //letterOrDigit(";x%");  // yields null
